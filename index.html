@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="inventario.js"></script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario de productos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    <div >
+        <div>
+            <form>
+                <h2>Inventario de productos</h2>
+                <br>
+                <br>
+                <div id="tituloAccion"></div>
+                <div id="divAccion" align="right"></div>
+
+                    <div>
+                       <h3>Agregar:</h3> 
+                        <br>
+                        <br>
+                        Código: <input type="number" name="codigo" id="codigo">
+                        Nombre: <input type="text" name="nombre" id="nombre">
+                        Cantidad: <input type="number" name="cantidad" id="cantidad">
+                        Costo: <input type="number" name="costo" id="costo">
+                        <br>
+                        <br>
+                        <button type="button" id="btnAgregar">Agregar</button>
+
+                    </div>
+                    <br>
+                    <div>
+                       <h3>Eliminar:</h3>
+                       <br>
+                       <br> 
+                       Código: <input type="number" name="codigo" id="codigo">
+                        <br>
+                        <br>
+                        <button type="button" id="btnEliminar">Eliminar</button>
+
+                        
+                    </div>
+                    <br>
+                    <div>
+                        <h3>Buscar:</h3> 
+                        <br>
+                        <br> 
+                        Código: <input type="number" name="codigo" id="codigo">
+                         <br>
+                         <br>
+                        <button type="button" id="btnBuscar">Buscar</button>
+
+                     </div>
+                    <br>
+                    <div>
+                       <h3>Listar:</h3> 
+                       <br>
+                       <br> 
+                        <button type="button" id="btnListado">Listar</button>
+                        
+                    </div>
+                    <br>
+                    <div>
+                       <h3>Listar Inverso:</h3> 
+                       <br>
+                       <br>     
+                        <button type="button" id="btnListadoI">Listado Inverso</button>
+                        
+                        <br><br>
+                    </div>
+                
+            </form>
+        </div>
+    </div>
+    <script>
+        //declarar un inventario
+         const inventario = new Inventario();
+            //boton de agregar
+            const btnAgregar = document.getElementById("btnAgregar");
+            btnAgregar.addEventListener("click", (e) => {
+                const codigo = document.getElementById("codigo").value;
+                const nombre = document.getElementById("nombre").value;
+                const cantidad = document.getElementById("cantidad").value;
+                const costo = document.getElementById("costo").value;
+                
+            
+    
+             const producto = new Producto(codigo, nombre, cantidad, costo);
+    
+             inventario.agregar(producto);
+             document.getElementById("divAccion").innerHTML += `<p>Se agrego un nuevo producto</p>`;
+             e.preventDefault();
+            });
+            //boton de eliminar
+            const btnEliminar = document.getElementById("btnEliminar");
+            btnEliminar.addEventListener("click", (e) => {
+
+                codigo = document.getElementById("codigo").value;
+
+                const msg = inventario.eliminar(codigo);
+
+                if (msg != null) {
+                    return document.getElementById("divAccion").innerHTML += `<p>¡Se ha eliminado el producto con el código ${codigo}!</p>`;
+                }else{
+                    document.getElementById("divAccion").innerHTML += `<p>¡No existe el producto con el código ${codigo}!</p>`;
+                    e.preventDefault();
+                }
+
+            });
+            //boton de buscar
+            const btnBuscar = document.getElementById("btnBuscar");
+            btnBuscar.addEventListener("click", (e) => {
+
+                codigo = document.getElementById("codigo").value;
+
+                const producto = inventario.buscar(codigo);
+
+                if (producto != null) {
+                    return document.getElementById("divAccion").innerHTML += `<p>¡El producto con el código ${codigo} existe!</p>`;
+                }else{
+                    document.getElementById("divAccion").innerHTML += `<p>¡No existe el producto con el código ${codigo}!</p>`;
+                    e.preventDefault();
+                }
+
+            });
+            //boton de listar
+            const btnListado = document.getElementById("btnListado");
+            btnListado.addEventListener("click", (e) => {
+
+                const listado = inventario.listado();
+
+                document.getElementById("divAccion").innerHTML += `<p><textarea> ---> LISTADO DE PRODUCTOS <--- \n${listado}</textarea></p>`;
+                e.preventDefault();
+
+            });
+            //boton de listar inverso
+            const btnListadoI = document.getElementById("btnListadoI");
+            btnListadoI.addEventListener("click", (e) => {
+
+                const listadoI = inventario.listadoInverso();
+
+                document.getElementById("divAccion").innerHTML += `<p><textarea> ---> LISTADO INVERSO DE PRODUCTOS <--- \n${listadoI}</textarea></p>`;
+                e.preventDefault();
+
+            });
+    </script>
+</body>
+</html>
