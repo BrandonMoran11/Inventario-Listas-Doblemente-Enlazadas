@@ -68,21 +68,25 @@ class Inventario{
         return null;
      }
     buscar(codigo){
-        if (this.primero != null) {
-            if (this.primero.codigo === codigo) {
-                return this.primero;
-            }
+      if (this.primero) {
+        if (this.primero.codigo === codigo) {
+            return this.primero;
+        }
+        else if(this.ultimo.codigo === codigo){
+            return this.ultimo;
         }else{
             let temp = this.primero;
-            while (temp.next != null) {
-                if (temp.next.codigo === codigo) {
-                    return temp.next;
-                }else{
-                    temp = temp.next;
+            while (temp) {
+                if (temp.codigo === codigo) {
+                    return temp;
                 }
+                temp = temp.next;
             }
+            return 'No se encontro el producto';
         }
-       
+
+      }
+      return 'No se encontro el producto';
       
     }
     listado(){
@@ -133,9 +137,9 @@ let p6 = new Producto(8,"Coca cola",10,20);
 inventario.agregar(p6);
 
 console.log(inventario.listado());
-console.log(inventario.eliminar(6));
-console.log(inventario.listado());
+// console.log(inventario.eliminar(6));
+// console.log(inventario.listado());
 
 // // inventario.listado();
 // //  console.log(inventario.listadoInverso());
-// //  console.log(inventario.buscar(123));
+console.log(inventario.buscar(9));
